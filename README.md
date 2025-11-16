@@ -4,5 +4,5 @@
 [![스탯](https://github-readme-stats.vercel.app/api?username=ahnjh05141)](https://github.com/anuraghazra/github-readme-stats)
 
 <a href="https://github.com/devxb/gitanimals">
-  <img src="https://render.gitanimals.org/farms/{username}" width="1000" height="120"/>
+  <img src="https://render.gitanimals.org/farms/ahnjh05141" width="1000" height="120"/>
 </a>
