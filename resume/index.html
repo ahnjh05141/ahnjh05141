@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anthony</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            min-height: 100vh;
+        }
+
+        /* 왼쪽 사이드바 */
+        .sidebar {
+            background-color: #f8f9fa;
+            padding: 40px 30px;
+            border-right: 1px solid #e0e0e0;
+        }
+
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .sidebar h1 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #e0e0e0;
+            flex-shrink: 0;
+        }
+
+        .contact-item {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .contact-item::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+        }
+
+        .phone::before {
+            content: '📱';
+        }
+
+        .email::before {
+            content: '✉️';
+        }
+
+        .contact-item a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        .section {
+            margin-top: 40px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #1a1a1a;
+        }
+
+        .github-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #333;
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .github-link::before {
+            content: '';
+            width: 18px;
+            height: 18px;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik04IDBDMy41OCAwIDAgMy41OCAwIDhjMCAzLjU0IDIuMjkgNi41MyA1LjQ3IDcuNTkuNC4wNy41NS0uMTcuNTUtLjM4IDAtLjE5LS4wMS0uODItLjAxLTEuNDktMi4wMS4zNy0yLjUzLS40OS0yLjY5LS45NC0uMDktLjIzLS40OC0uOTQtLjgyLTEuMTMtLjI4LS4xNS0uNjgtLjUyLS4wMS0uNTMuNjMtLjAxIDEuMDguNTggMS4yMy44Mi43MiAxLjIxIDEuODcuODcgMi4zMy42Ni4wNy0uNTIuMjgtLjg3LjUxLTEuMDctMS43OC0uMi0zLjY0LS44OS0zLjY0LTMuOTUgMC0uODcuMzEtMS41OS44Mi0yLjE1LS4wOC0uMi0uMzYtMS4wMi4wOC0yLjEyIDAgMCAuNjctLjIxIDIuMi44Mi42NC0uMTggMS4zMi0uMjcgMi0uMjcuNjggMCAxLjM2LjA5IDIgLjI3IDEuNTMtMS4wNCAyLjItLjgyIDIuMi0uODIuNDQgMS4xLjE2IDEuOTIuMDggMi4xMi41MS41Ni44MiAxLjI3LjgyIDIuMTUgMCAzLjA3LTEuODcgMy43NS0zLjY1IDMuOTUuMjkuMjUuNTQuNzMuNTQgMS40OCAwIDEuMDctLjAxIDEuOTMtLjAxIDIuMiAwIC4yMS4xNS40Ni41NS4zOEMxMy43MSAxNC41MyAxNiAxMS41MyAxNiA4YzAtNC40Mi0zLjU4LTgtOC04eiIgZmlsbD0iIzE4MUMxRiIvPgo8L3N2Zz4K');
+            background-size: contain;
+            background-repeat: no-repeat;
+            flex-shrink: 0;
+        }
+
+        .github-stats {
+            color: #666;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        /* 도넛 차트 */
+        .chart-container {
+            margin: 30px 0;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .donut-chart {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(
+                #1e88e5 0deg 246deg,
+                #ff9800 246deg 339deg,
+                #e53935 339deg 349deg,
+                #9c27b0 349deg 356deg,
+                #00acc1 356deg 360deg
+            );
+            position: relative;
+        }
+
+        .donut-chart::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: #f8f9fa;
+            border-radius: 50%;
+        }
+
+        .chart-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 1;
+        }
+
+        .chart-legend {
+            flex: 1;
+            font-size: 12px;
+        }
+
+        .legend-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .legend-label {
+            color: #666;
+            font-size: 12px;
+        }
+
+        .legend-value {
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            color: white;
+            font-weight: 600;
+        }
+
+        .github-stats-box {
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+
+        .stat-label {
+            color: #666;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        /* 기술 태그 */
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .tag {
+            background-color: #e0e0e0;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #333;
+        }
+
+        /* 오른쪽 메인 컨텐츠 */
+        .main-content {
+            padding: 40px 50px;
+        }
+
+
+        .content-section {
+            margin-bottom: 50px;
+        }
+
+        .content-section h2 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #1a1a1a;
+        }
+
+        .experience-item {
+            margin-bottom: 30px;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .experience-date {
+            color: #999;
+            font-size: 14px;
+        }
+
+        .experience-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .experience-subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .experience-description {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .experience-description ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .experience-description li {
+            margin-bottom: 8px;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .experience-description li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .project-tag {
+            background-color: #f0f0f0;
+            padding: 4px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        .link {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 968px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 왼쪽 사이드바 -->
+        <aside class="sidebar">
+            <div class="profile-header">
+                <div class="profile-info">
+                    <h1>안재현</h1>
+                    <div class="subtitle">Software Developer</div>
+                </div>
+                <img src="images/profile.JPG" alt="Profile" class="profile-image">
+            </div>
+
+            <div class="contact-item phone">
+                <span>010-5308-2066</span>
+            </div>
+
+            <div class="contact-item email">
+                <a href="mailto:ahnjh05141@naver.com">ahnjh05141@naver.com</a>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Github</div>
+                <a href="https://github.com/ahnjh05141" class="github-link">https://github.com/ahnjh05141</a>
+
+                <div class="chart-container">
+                    <div class="donut-chart">
+                        <div class="chart-label">Python<br>68.27%</div>
+                    </div>
+                    <div class="chart-legend">
+                        <div class="legend-item">
+                            <span class="legend-label">Python</span>
+                            <span class="legend-value" style="background-color: #2962ff;">68.27%</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-label">Swift</span>
+                            <span class="legend-value" style="background-color: #ff6d00;">25.75%</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-label">HTML</span>
+                            <span class="legend-value" style="background-color: #d50000;">2.91%</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-label">CSS</span>
+                            <span class="legend-value" style="background-color: #aa00ff;">1.93%</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-label">C++</span>
+                            <span class="legend-value" style="background-color: #00bfa5;">1.15%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">기술 스택</div>
+                <div class="tech-tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">Swift</span>
+                    <span class="tag">Flask</span>
+                    <span class="tag">Jenkins</span>
+                    <span class="tag">HTML/CSS</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 오른쪽 메인 컨텐츠 -->
+        <main class="main-content">
+            <!-- 학력 -->
+            <div class="content-section">
+                <h2>학력</h2>
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <span class="experience-date">2020 ~</span>
+                    </div>
+                    <div style="font-size: 16px; margin-bottom: 5px;">
+                        <span style="color: #1a1a1a; font-weight: 600;">중앙대학교</span>
+                        <span style="color: #666;"> 소프트웨어학부</span>
+                    </div>
+                    <div style="font-size: 16px;">
+                        <span style="color: #666;">4학년 재학중</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 경력 -->
+            <div class="content-section">
+                <h2>경력</h2>
+                <div class="experience-item">
+                    <div class="experience-description" style="color: #999; font-style: italic;">
+                        경력 정보를 resume-content.md 파일에 작성해주세요.
+                    </div>
+                </div>
+            </div>
+
+            <!-- 사이드 프로젝트 -->
+            <div class="content-section">
+                <h2>사이드 프로젝트</h2>
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <span class="experience-date">2024.09 - 2025.01</span>
+                    </div>
+                    <div class="experience-title">Mixby - AI 기반 퍼스널라이징 칵테일 추천 시스템</div>
+                    <div class="experience-subtitle">iOS 클라이언트 개발 & 백엔드 API 설계/구현</div>
+                    <div class="project-tags">
+                        <span class="project-tag">Python</span>
+                        <span class="project-tag">Flask</span>
+                        <span class="project-tag">Swift</span>
+                        <span class="project-tag">SwiftUI</span>
+                        <span class="project-tag">GPT-4o-mini</span>
+                        <span class="project-tag">RAG</span>
+                        <span class="project-tag">ChromaDB</span>
+                    </div>
+                    <div class="experience-description">
+                        <ul>
+                            <li><strong>Backend 개발 (Flask):</strong> ChromaDB 벡터 검색, Flask 마이크로서비스, Jenkins CI/CD 파이프라인</li>
+                            <li><strong>iOS 클라이언트 개발 (SwiftUI):</strong> 네이티브 앱, MVVM 아키텍처, 비동기 네트워크 통신, 반응형 UI</li>
+                            <li><strong>시스템 통합:</strong> RESTful API 설계 및 iOS-Flask 간 통신, 에러 핸들링 및 서버 상태 모니터링</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <span class="experience-date">2025.09 - 2025.12</span>
+                    </div>
+                    <div class="experience-title">GRAFT - Few-Shot Instance Segmentation 프레임워크</div>
+                    <div class="experience-subtitle">공동 저자 (중앙대학교)</div>
+                    <div class="project-tags">
+                        <span class="project-tag">Python</span>
+                        <span class="project-tag">YOLOv8</span>
+                        <span class="project-tag">SAM2</span>
+                        <span class="project-tag">Veo3</span>
+                        <span class="project-tag">PCT-Net</span>
+                        <span class="project-tag">PyTorch</span>
+                    </div>
+                    <div class="experience-description">
+                        <ul>
+                            <li><strong>YOLOv8m-seg 모델 파인튜닝:</strong> COCO 사전학습 모델 기반 Few-shot 환경 적응, 3000개 합성 데이터셋 생성 및 학습</li>
+                            <li><strong>합성 데이터 파이프라인 구축:</strong> SAM2 자동 세그멘테이션, PCT-Net 이미지 하모나이제이션, 배경 합성 전략 설계</li>
+                            <li><strong>성능 개선 실험:</strong> 저해상도/업스케일링/그리드 배경 전략 비교 분석, Precision 32-34% 향상 달성</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 수상/자격증 -->
+            <div class="content-section">
+                <h2>수상/자격증</h2>
+                <div class="experience-item">
+                    <div class="experience-description" style="color: #999; font-style: italic;">
+                        수상 및 자격증 정보를 resume-content.md 파일에 작성해주세요.
+                    </div>
+                </div>
+            </div>
+
+            <!-- 활동 -->
+            <div class="content-section">
+                <h2>활동</h2>
+                <div class="experience-item">
+                    <div class="experience-description" style="color: #999; font-style: italic;">
+                        활동 정보를 resume-content.md 파일에 작성해주세요.
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
